@@ -70,6 +70,7 @@ void loop() {
       break;
     default:
       stateNum = 1;
+	  byte key_to_write[] = { 0x9B, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x01 };
       beep();
       break;      
 }
