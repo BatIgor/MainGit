@@ -9,7 +9,8 @@ int counter = 1;
 int buttonState      = 0;     // current state of the button
 int lastButtonState  = 0;     // previous state of the button
 int ledState         = 0;     // remember current led state
-int stateNum         = 1;
+int stateNum         = 0;
+byte *key_to_write;
 
 OneWire ds(pin);  // pin 10 is 1-Wire interface pin now
 
@@ -18,19 +19,18 @@ void setup(void) {
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, LOW);
   pinMode(buttonPin, INPUT);
+  
 }
 
 void loop() {
-  
- // read the pushbutton input pin
+  // read the pushbutton input pin
   buttonState = digitalRead(buttonPin);
-  byte key_to_write[8];
+  
   // check if the button is pressed or released
   // by comparing the buttonState to its previous state 
   if (buttonState != lastButtonState) {
     
     // change the state of the led when someone pressed the button
-    
     if (buttonState == 1 & stateNum < 9) 
  {
       stateNum++; 
@@ -38,46 +38,40 @@ void loop() {
       switch (stateNum) 
    {
     case 1:
-      key_to_write = { 0x9B, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x01 };
+      key_to_write = (byte[8]){ 0x9B, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x01 };
       beep();
       break;
     case 2:
-      key_to_write = { 0xE1, 0x00, 0x36, 0x5A, 0x11, 0x40, 0xBE, 0x01 };
+      key_to_write = (byte[8]){ 0xE1, 0x00, 0x36, 0x5A, 0x11, 0x40, 0xBE, 0x01 };
       beep();beep();
       break;
     case 3:
-      key_to_write = { 0x2F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x01 };
+      key_to_write = (byte[8]){ 0x2F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x01 };
       beep();beep();beep();
       break;
     case 4:
-      key_to_write = { 0x3D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
+      key_to_write = (byte[8]){ 0x3D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
       beep();beep();beep();beep();
       break;
     case 5:
-      key_to_write = { 0xE6, 0x00, 0x00, 0x09, 0x3C, 0xE4, 0xA9, 0x01 };
+      key_to_write = (byte[8]){ 0xE6, 0x00, 0x00, 0x09, 0x3C, 0xE4, 0xA9, 0x01 };
       beeep();
       break;
     case 6:
-      key_to_write = { 0xFB, 0x00, 0x00, 0xAA, 0x11, 0xBE, 0x00, 0x01 };
+      key_to_write = (byte[8]){ 0xFB, 0x00, 0x00, 0xAA, 0x11, 0xBE, 0x00, 0x01 };
       beeep();beeep();
       break;
     case 7:
-      key_to_write = { 0x5C, 0x00, 0x00, 0x0F, 0x2E, 0xB8, 0x76, 0x01 };
+      key_to_write = (byte[8]){ 0x5C, 0x00, 0x00, 0x0F, 0x2E, 0xB8, 0x76, 0x01 };
       beeep();beeep();beeep();
       break;
     case 8:
-      key_to_write = { 0x2D, 0x00, 0x00, 0x00, 0x01, 0xFF, 0xFF, 0x01 };
+      key_to_write = (byte[8]){ 0x2D, 0x00, 0x00, 0x00, 0x01, 0xFF, 0xFF, 0x01 };
       beeep();beeep();beeep();beeep();
+      stateNum = 0;
       break;
-    default:
-      stateNum = 1;
-      key_to_write = { 0x9B, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x01 };
-      beep();
-      break;      
  }
 }
-
-    }
 
     // remember the current state of the button
     lastButtonState = buttonState;
