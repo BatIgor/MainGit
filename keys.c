@@ -28,9 +28,10 @@ void loop() {
   // check if the button is pressed or released
   // by comparing the buttonState to its previous state 
   if (buttonState != lastButtonState) {
+    byte key_to_write[8];
     
     // change the state of the led when someone pressed the button
-    byte key_to_write[8];
+    
     if (buttonState == 1 & stateNum < 9) 
  {
       stateNum++; 
