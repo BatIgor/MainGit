@@ -2,8 +2,6 @@
 
 #define pin 10
 
-byte key_to_write[] = { 0x89, 0x35, 0xC0, 0x3C, 0x0B, 0x00, 0x50, 0x3F };
-
 const int buttonPin  = 8;     // the pin that the pushbutton is attached to
 const int ledPin     = 13;    // the pin that the LED is attached to
 int counter = 1;
